@@ -1,13 +1,32 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-h1 {
-    color: #333;
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    background-color: black;
+    height: 60px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px 0 20px;
+    color: white;
+}
+
+.header-img {
+    height: 80%;
+}
+
+.main-body {
+
+}
+
+.footer {
+
 }
