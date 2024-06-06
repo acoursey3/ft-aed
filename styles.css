@@ -53,10 +53,12 @@ body {
 .plot-container {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .plot {
-
+    display: flex;
+    width: 100%;
 }
 
 .footer {

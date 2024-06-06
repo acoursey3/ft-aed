@@ -99,8 +99,13 @@ async function plotDay(day_num) {
         plot_bgcolor: 'rgba(0, 0, 0, 1)', // Setting background color to black
         paper_bgcolor: 'rgba(0, 0, 0, 0)', // Setting paper background color to transparent
         margin: {
-            autoexpand: true // Automatically expand margins to fit the plot
-        }
+            l: 80, // Adjusting left margin to create space
+            r: 50, // Adjusting right margin
+            b: 50, // Adjusting bottom margin
+            t: 50, // Adjusting top margin to reduce distance between title and plot
+            pad: 4 // Padding between plot area and the edge of the plot
+        },
+        responsive: true
     };
     
 
