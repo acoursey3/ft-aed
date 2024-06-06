@@ -1,16 +1,17 @@
 * {
+    
+}
+
+body {
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, sans-serif;
-}
-
 .header {
     display: flex;
-    width: 100%;
+    max-width: 100%;
     background-color: black;
     height: 60px;
     justify-content: space-between;
@@ -21,10 +22,13 @@ body {
 
 .header-img {
     height: 80%;
+    max-width: 100%;
 }
 
 .main-body {
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .footer {
