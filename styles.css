@@ -164,20 +164,8 @@ body {
     justify-content: space-between;
 }
 
-.citation-container {
-    width: 45%;
-}
-
-.dataset-container {
-    width: 45%;
-}
-
-.acknowledgement-container {
-    width: 45%;
-}
-
-.team-container {
-    width: 45%;
+.grid-container {
+    width: 45%
 }
 
 .citation-box {
@@ -201,3 +189,8 @@ body {
     text-align: center;
 }
 
+@media (max-width: 800px) {
+    .grid-container {
+        width: 100%;
+    }
+}
