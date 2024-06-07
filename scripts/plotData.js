@@ -123,6 +123,7 @@ async function plotDay(day_num, feature, lane) {
         }
 
         crashLines.push(line);
+        hasManual = true;
     }
 
     const legendItems = [

@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    background-color: rgb(255, 255, 255);
 }
 
 .header {
@@ -48,6 +49,7 @@ body {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
+    padding:22px 44px 22px 44px;
 }
 
 .plot-container {
@@ -55,6 +57,8 @@ body {
     align-items: center;
     width: 100%;
     flex-wrap: wrap;
+    background-color: rgb(241, 241, 241);
+    border-radius: 10px;
 }
 
 .plot-title {
@@ -71,8 +75,77 @@ body {
     display: flex;
     width: 100%;
     justify-content: center;
+    margin-bottom: 10px;
 }
 
-/* .footer {
+.dropdown {
+    position: relative;
+    display: inline-block;
+    border-radius: 8px;
+    margin: 0 5px 0 5px;
+  }
 
-} */
+.button-link {
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    transition: transform 0.1s ease; /* Add transition for smooth animation */
+    margin-bottom: 5px;
+    background-color: rgb(245, 255, 242);
+    text-decoration: none;
+    color: black;
+}
+
+.button-link:hover {
+    transform: scale(1.1); /* Scale the button by 10% on hover */
+    animation: rainbow-border 3s infinite; /* Rainbow border animation */
+    cursor: pointer;
+}
+
+@keyframes rainbow-border {
+    0% {
+        border-color: red; /* Start with red */
+    }
+    16.67% {
+        border-color: orange; /* Transition to orange */
+    }
+    33.33% {
+        border-color: yellow; /* Transition to yellow */
+    }
+    50% {
+        border-color: green; /* Transition to green */
+    }
+    66.67% {
+        border-color: blue; /* Transition to blue */
+    }
+    83.33% {
+        border-color: indigo; /* Transition to indigo */
+    }
+    100% {
+        border-color: violet; /* Transition back to red */
+    }
+}
+
+.link-container {
+    margin-top: 10px;
+    margin-bottom: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: black;
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    color: white;
+    text-align: center;
+}
