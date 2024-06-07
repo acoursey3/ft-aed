@@ -23,6 +23,42 @@
         <div class="main-body">
             <!-- <h1>Website coming soon</h1> -->
             <div class="plot-container">
+                <h1 class="plot-title">Data Visualization</h1>
+                <div class="dropdown-container">
+                    <select id="feature-dropdown" onchange="updatePlot()">
+                        <option value="speed" selected>Speed</option>
+                        <option value="occ">Occupancy</option>
+                        <option value="volume">Volume</option>
+                    </select>
+                    <select id="lane-dropdown" onchange="updatePlot()">
+                        <option value="lane1" selected>Lane 1</option>
+                        <option value="lane2">Lane 2</option>
+                        <option value="lane3">Lane 3</option>
+                        <option value="lane4">Lane 4</option>
+                    </select>
+                    <select id="day-dropdown" onchange="updatePlot()">
+                        <option value="1" selected>Oct. 2</option>
+                        <option value="2">Oct. 3</option>
+                        <option value="3">Oct. 4</option>
+                        <option value="4">Oct. 5</option>
+                        <option value="5">Oct. 6</option>
+                        <option value="8">Oct. 9</option>
+                        <option value="9">Oct. 10</option>
+                        <option value="10">Oct. 11</option>
+                        <option value="11">Oct. 12</option>
+                        <option value="12">Oct. 13</option>
+                        <option value="15">Oct. 16</option>
+                        <option value="16">Oct. 17</option>
+                        <option value="17">Oct. 18</option>
+                        <option value="18">Oct. 19</option>
+                        <option value="19">Oct. 20</option>
+                        <option value="22">Oct. 23</option>
+                        <option value="23">Oct. 24</option>
+                        <option value="24">Oct. 25</option>
+                        <option value="25">Oct. 26</option>
+                        <option value="26">Oct. 27</option>
+                    </select>
+                </div>
                 <div id="plot" class="plot"></div>
             </div>
         </div>

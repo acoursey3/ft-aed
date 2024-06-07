@@ -1,8 +1,13 @@
+let currTraces = {};
+let currDay = 1;
+
 async function readDay(dayNum) {
     const day_data = await readCSV(dayNum);
     const columns = parseCSV(day_data);
-    
-    return columns;
+
+    currDay = dayNum;
+
+    updateTraces(columns);
 }
 
 async function readCSV(day_num) {
@@ -45,46 +50,17 @@ function parseCSV(csv) {
     return columns;
 }
 
-async function plotDay(day_num) {
+async function plotDay(day_num, feature, lane) {
 
-    data = await readDay(day_num);
-    console.log(data)
-
-    dates = data.time.map(date => new Date(date));
-
-    xData = dates; //dates.map(date => date.getHours());
-    yData = data.milemarker.map(parseFloat);
-    speedData = data.lane1_speed.map(parseFloat);
-    console.log(speedData)
-
-    var colorScale = [
-        [0, 'rgb(200, 0, 0)'],    // Dark red at 0
-        [1, 'rgb(0, 200, 0)']     // Light green at 80
-      ];
-
-    const trace = { // make and save these for speed occupancy and volume of any lane, just have to regenerate when day is changed
-        x: xData,
-        y: yData,
-        mode: 'markers',
-        marker: {
-            color: speedData, // Color points based on speed
-            // colorscale: 'RdYlGn', // Set color scale
-            colorbar: {
-                title: 'Speed', // Add color bar title
-                ticksuffix: 'mph' // Add unit to color bar ticks
-            },
-            size: 2, // Set marker size
-            colorscale: colorScale,
-        },
-        type: 'scatter',
-        hovertemplate: '<b>Time</b>: %{x|%H:%M:%S}<br>' + // Format date to show only the hour
-                 '<b>Milemarker</b>: %{y}<br>' +
-                 '<b>Speed</b>: %{marker.color:.2f} mph<extra></extra>' // Limit speed to 2 decimal places
-    };
+    if(day_num != currDay || Object.keys(currTraces).length === 0) {
+        console.log("reading data")
+        await readDay(day_num);
+        console.log("done reading")
+    }
 
     // Define layout for the plot
     const layout = {
-        title: 'Speed Diagram',
+        title: feature,
         xaxis: {
             title: 'Time',
             showgrid: true,
@@ -110,6 +86,82 @@ async function plotDay(day_num) {
     
 
     // Plot the scatter plot
-    Plotly.newPlot('plot', [trace], layout);
+    Plotly.newPlot('plot', [currTraces[feature][lane]], layout);
 }
-plotDay(1);
+
+function updateTraces(data) {
+    currTraces = {};
+
+    const features = ['speed', 'occ', 'volume'];
+    const lanes = ['lane1', 'lane2', 'lane3', 'lane4'];
+
+    const feature_unit = {
+        'speed': 'mph',
+        'occ': '%',
+        'volume': ''
+    }
+
+    dates = data.time.map(date => new Date(date));
+
+    xData = dates; //dates.map(date => date.getHours());
+    yData = data.milemarker.map(parseFloat);
+
+    
+
+    for(let i=0; i<features.length; i++) {
+        feature_name = features[i]
+        currTraces[feature_name] = {};
+        
+        let colorScale = [
+            [0, 'rgb(200, 0, 0)'],    // Dark red at 0
+            [1, 'rgb(0, 200, 0)']     // Light green at 80
+        ];
+
+        if(feature_name=='occ' || feature_name=='volume') {
+            colorScale = [
+                [0, 'rgb(0, 200, 0)'],    // Dark red at 0
+                [1, 'rgb(200, 0, 0)']     // Light green at 80
+            ];
+        }
+
+        for(let j=0; j<lanes.length; j++) {
+            lane_name = lanes[j];
+            colorData = data[lane_name + "_" + feature_name];
+
+            const trace = { // make and save these for speed occupancy and volume of any lane, just have to regenerate when day is changed
+                x: xData,
+                y: yData,
+                mode: 'markers',
+                marker: {
+                    color: colorData,
+                    colorbar: {
+                        title: feature_name, // Add color bar title
+                        ticksuffix: feature_unit[feature_name] // Add unit to color bar ticks
+                    },
+                    size: 2, // Set marker size
+                    colorscale: colorScale,
+                },
+                type: 'scattergl',
+                hovertemplate: '<b>Time</b>: %{x|%H:%M:%S}<br>' + 
+                         '<b>Milemarker</b>: %{y}<br>' +
+                         `<b>${feature_name}</b>: %{marker.color:.2f} ${feature_unit[feature_name]}<extra></extra>`
+            };
+
+            currTraces[feature_name][lane_name] = trace;
+        }
+    }
+}
+
+function updatePlot() {
+    const featureDropdown = document.getElementById("feature-dropdown");
+    const laneDropdown = document.getElementById("lane-dropdown");
+    const dayDropdown = document.getElementById("day-dropdown");
+
+    const selectedFeature = featureDropdown.options[featureDropdown.selectedIndex].value;
+    const selectedLane = laneDropdown.options[laneDropdown.selectedIndex].value;
+    const selectedDay = dayDropdown.options[dayDropdown.selectedIndex].value;
+
+    plotDay(parseInt(selectedDay), selectedFeature, selectedLane);
+}
+
+plotDay(1, 'speed', 'lane1')
