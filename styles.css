@@ -1,9 +1,16 @@
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     background-color: rgb(255, 255, 255);
+    height: 100%;
 }
 
 .header {
@@ -49,7 +56,8 @@ body {
     align-items: center;
     justify-content: center;
     flex-wrap: wrap;
-    padding:22px 44px 22px 44px;
+    padding: 22px 44px 22px 44px;
+    min-height: 100%;
 }
 
 .plot-container {
@@ -59,6 +67,8 @@ body {
     flex-wrap: wrap;
     background-color: rgb(241, 241, 241);
     border-radius: 10px;
+    margin-bottom: 22px;
+    padding: 20px;
 }
 
 .plot-title {
@@ -98,7 +108,7 @@ body {
 
 .button-link:hover {
     transform: scale(1.1); /* Scale the button by 10% on hover */
-    animation: rainbow-border 3s infinite; /* Rainbow border animation */
+    animation: rainbow-border 5s infinite; /* Rainbow border animation */
     cursor: pointer;
 }
 
@@ -135,8 +145,8 @@ body {
     width: 100%;
 }
 
-  .footer {
-    position: fixed;
+.footer {
+    position: relative;
     bottom: 0;
     left: 0;
     width: 100%;
@@ -145,7 +155,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
     color: white;
     text-align: center;
 }
+
