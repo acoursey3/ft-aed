@@ -76,6 +76,46 @@
                     </div>
                     <div id="plot" class="plot"></div>
                 </div>
+                <div class="content-blocks">
+                    <div class="dataset-container">
+                        <h3>Dataset Details</h3>
+                        The dataset consists of the following features.
+                        <ul>
+                            <li><strong>time_unix</strong>: the time the measurement was taken.</li>
+                            <li><strong>milemarker</strong>:  location of sensor on the interstate. 
+                                This comes from the Tennessee Department of Transportation's coordination system and is consistent with what is labeled on the road.</li>
+                            <li><strong>lane</strong>: the lane number. There are four lanes, where lane 1 is the left-most lane.</li>
+                            <li><strong>speed</strong>: 30-second average speed of the vehicles passing through the area.</li>
+                            <li><strong>occupancy</strong>: 30-second average percentage of time that the detection zone of the radar sensor is occupied by a vehicle.</li>
+                            <li><strong>volume</strong>: 30-second average number of vehicles passing through the area.</li>
+                            <li><strong>crash_record</strong>: whether a crash was officially reported at this timestamp.</li>
+                            <li><strong>human_label</strong>: human anomaly label for this timestamp.</li>
+                        </ul>
+                        <p>There are <strong>196 nodes</strong>, across the 4 lanes and 49 milemarkers. 
+                            Data was recorded using a Radar Detection System (RDS) sensor every <strong>30 seconds</strong> weekday mornings (4:00 AM - 12:00 PM) in October, 2023. There are <strong>3,763,200</strong> data points.
+                        </p>
+                    </div>
+                    <div class="citation-container">
+                        <h3>Citation</h3>
+                        <p>If you find the dataset or code useful for your research, please use the following citation.</p>
+                        <div class="citation-box">
+                            bibtex entry coming soon
+                        </div>
+                    </div>
+                    <div class="team-container">
+                        <h3>Team Members</h3>
+                        <p>Austin Coursey [1], Junyi Ji [2], Marcos Quinones-Grueiro [1,2], Yuhang Zhang [2], Tyler Derr [3], Gautam Biswas [1], Daniel Work [2]</p>
+                        <p>Please contact austin[dot]c[dot]coursey[at]vanderbilt[dot]edu with questions!</p>
+                        <p>The <a href="https://lab.vanderbilt.edu/vumacs/" target="_blank" style="font-weight:600">Modeling and Analysis of Complex Systems (MACS) Lab</a> [1],
+                            the <a href="https://lab-work.github.io" target="_blank" style="font-weight:600">Work Research Group</a> [2], 
+                            and the <a href="https://nds-vu.github.io" target="_blank" style="font-weight:600">Network and Data Science (NDS) Lab</a> [3] at Vanderbilt University.
+                        </p>
+                    </div>
+                    <div class="acknowledgement-container">
+                        <h3>Acknowledgements</h3>
+                        <p>We would like to acknowledge the Tennessee Department of Transportation...</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="footer">

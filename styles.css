@@ -157,6 +157,36 @@ body {
     width: 100%;
 }
 
+.content-blocks {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.citation-container {
+    width: 45%;
+}
+
+.dataset-container {
+    width: 45%;
+}
+
+.acknowledgement-container {
+    width: 45%;
+}
+
+.team-container {
+    width: 45%;
+}
+
+.citation-box {
+    background: rgb(245, 255, 242);
+    padding: 20px;
+    font-family: 'Monaco', monospace;
+    width: 90%
+}
+
 .footer {
     position: relative;
     bottom: 0;
