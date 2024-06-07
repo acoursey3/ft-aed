@@ -8,6 +8,29 @@ async function readDay(dayNum) {
     currDay = dayNum;
 
     updateTraces(columns);
+
+    console.log(columns['crash_record'])
+
+    const crashIndices = [];
+    columns['crash_record'].forEach((value, index) => {
+        if (value == 1) {
+            crashIndices.push(index);
+        }
+    });
+
+    crashTimes = new Set(crashIndices.map(index => columns['time'][index]));
+
+    const manualAnomalyIndices = [];
+    columns['human_label'].forEach((value, index) => {
+        if (value == 1) {
+            manualAnomalyIndices.push(index);
+        }
+    });
+
+    manualTimes = new Set(manualAnomalyIndices.map(index => columns['time'][index]));
+
+    // Getting times crashes were reported for plotting
+    return [crashTimes, manualTimes];
 }
 
 async function readCSV(day_num) {
@@ -54,13 +77,62 @@ async function plotDay(day_num, feature, lane) {
 
     if(day_num != currDay || Object.keys(currTraces).length === 0) {
         console.log("reading data")
-        await readDay(day_num);
+        result = await readDay(day_num);
+        crashTimes = result[0];
+        manualTimes = result[1];
         console.log("done reading")
     }
 
+    const crashLines = [];
+    let hasCrash = false;
+    for (const crashTime of crashTimes) {
+        line = {
+            type: 'line',
+            x0: crashTime,   // x position of the vertical line
+            y0: 53,   // start y position of the vertical line
+            x1: crashTime,   // end x position of the vertical line
+            y1: 70.5,  // end y position of the vertical line
+            line: {
+                color: 'purple',
+                width: 2,
+                dash: 'dashdot',
+            },
+            name: 'Crash Reported', 
+            showlegend: !hasCrash ? true : false
+        }
+        
+        crashLines.push(line);
+        hasCrash = true;
+    }
+
+    let hasManual = false;
+    for (const manualTime of manualTimes) {
+        line = {
+            type: 'line',
+            x0: manualTime,   // x position of the vertical line
+            y0: 53,   // start y position of the vertical line
+            x1: manualTime,   // end x position of the vertical line
+            y1: 70.5,  // end y position of the vertical line
+            line: {
+                color: 'yellow',
+                width: 1,
+                dash: 'dashdot',
+            },
+            name: 'Human Annotated Anomaly',  
+            showlegend: !hasManual ? true : false,
+        }
+
+        crashLines.push(line);
+    }
+
+    const legendItems = [
+        { name: 'Crash Reported', color: 'purple', dash: 'dashdot' },
+        { name: 'Human Annotated Anomaly', color: 'yellow', dash: 'dashdot' }
+    ];
+
     // Define layout for the plot
     const layout = {
-        title: feature,
+        title: feature.charAt(0).toUpperCase() + feature.slice(1) + " in Lane " + lane.charAt(lane.length - 1),
         xaxis: {
             title: 'Time',
             showgrid: true,
@@ -81,7 +153,36 @@ async function plotDay(day_num, feature, lane) {
             t: 50, // Adjusting top margin to reduce distance between title and plot
             pad: 4 // Padding between plot area and the edge of the plot
         },
-        responsive: true
+        responsive: true,
+        shapes: crashLines,
+        legend: {
+            
+            traceorder: 'normal',
+            font: {
+                family: 'Arial, sans-serif',
+                size: 12,
+                color: 'black'
+            },
+            bgcolor: 'rgba(0,0,0,0)', // Transparent background
+            bordercolor: 'rgba(255,255,255,0.3)', // Border color for legend
+            borderwidth: 1, // Border width for legend
+            itemsizing: 'constant', // Keep legend items the same size
+            itemclick: false, // Allow toggling visibility by clicking on legend items
+            x: 0, // Position legend on the left
+            xanchor: 'left', // Anchor legend to the left
+            y: -0.1, // Position legend at the top
+            yanchor: 'top', // Anchor legend to the top
+            title: {
+                text: '',
+                font: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'white'
+                }
+            },
+            orientation: "h"
+        },
+        showlegend: true
     };
     
 
@@ -94,6 +195,11 @@ function updateTraces(data) {
 
     const features = ['speed', 'occ', 'volume'];
     const lanes = ['lane1', 'lane2', 'lane3', 'lane4'];
+    const featureRanges = {
+        'speed': 90,
+        'occ': 100,
+        'volume': 30
+    }
 
     const feature_unit = {
         'speed': 'mph',
@@ -105,8 +211,6 @@ function updateTraces(data) {
 
     xData = dates; //dates.map(date => date.getHours());
     yData = data.milemarker.map(parseFloat);
-
-    
 
     for(let i=0; i<features.length; i++) {
         feature_name = features[i]
@@ -140,11 +244,14 @@ function updateTraces(data) {
                     },
                     size: 2, // Set marker size
                     colorscale: colorScale,
+                    cmin: 0,
+                    cmax: featureRanges[feature_name]
                 },
                 type: 'scattergl',
                 hovertemplate: '<b>Time</b>: %{x|%H:%M:%S}<br>' + 
                          '<b>Milemarker</b>: %{y}<br>' +
-                         `<b>${feature_name}</b>: %{marker.color:.2f} ${feature_unit[feature_name]}<extra></extra>`
+                         `<b>${feature_name}</b>: %{marker.color:.2f} ${feature_unit[feature_name]}<extra></extra>`,
+                showlegend: false
             };
 
             currTraces[feature_name][lane_name] = trace;
