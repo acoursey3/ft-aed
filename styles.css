@@ -102,6 +102,8 @@ body {
     display: inline-block;
     border-radius: 8px;
     margin: 0 5px 0 5px;
+    font-weight: 600;
+    font-size: medium;
   }
 
 .button-link {
@@ -113,6 +115,7 @@ body {
     background-color: rgb(245, 255, 242);
     text-decoration: none;
     color: black;
+    font-weight: 600;
 }
 
 .button-link:hover {

@@ -9,8 +9,6 @@ async function readDay(dayNum) {
 
     updateTraces(columns);
 
-    console.log(columns['crash_record'])
-
     const crashIndices = [];
     columns['crash_record'].forEach((value, index) => {
         if (value == 1) {
@@ -40,7 +38,6 @@ async function readCSV(day_num) {
 
         return csvData
     } catch (error) {
-        console.error('Error reading CSV file:', error);
         return null;
     }
 }
@@ -76,11 +73,9 @@ function parseCSV(csv) {
 async function plotDay(day_num, feature, lane) {
 
     if(day_num != currDay || Object.keys(currTraces).length === 0) {
-        console.log("reading data")
         result = await readDay(day_num);
         crashTimes = result[0];
         manualTimes = result[1];
-        console.log("done reading")
     }
 
     const crashLines = [];
