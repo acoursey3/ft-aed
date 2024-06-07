@@ -88,7 +88,7 @@ async function plotDay(day_num, feature, lane) {
             x1: crashTime,   // end x position of the vertical line
             y1: 70.5,  // end y position of the vertical line
             line: {
-                color: 'purple',
+                color: 'white',
                 width: 2,
                 dash: 'dashdot',
             },
@@ -120,11 +120,6 @@ async function plotDay(day_num, feature, lane) {
         crashLines.push(line);
         hasManual = true;
     }
-
-    const legendItems = [
-        { name: 'Crash Reported', color: 'purple', dash: 'dashdot' },
-        { name: 'Human Annotated Anomaly', color: 'yellow', dash: 'dashdot' }
-    ];
 
     // Define layout for the plot
     const layout = {
@@ -159,14 +154,14 @@ async function plotDay(day_num, feature, lane) {
                 size: 12,
                 color: 'black'
             },
-            bgcolor: 'rgba(0,0,0,0)', // Transparent background
-            bordercolor: 'rgba(255,255,255,0.3)', // Border color for legend
-            borderwidth: 1, // Border width for legend
+            bgcolor: 'rgba(0,0,0,0.15)', // Transparent background
+            bordercolor: 'rgba(255,255,255,0.1)', // Border color for legend
+            borderwidth: 0.1, // Border width for legend
             itemsizing: 'constant', // Keep legend items the same size
             itemclick: false, // Allow toggling visibility by clicking on legend items
             x: 0, // Position legend on the left
             xanchor: 'left', // Anchor legend to the left
-            y: -0.1, // Position legend at the top
+            y: -0.15, // Position legend at the top
             yanchor: 'top', // Anchor legend to the top
             title: {
                 text: '',
@@ -184,6 +179,238 @@ async function plotDay(day_num, feature, lane) {
 
     // Plot the scatter plot
     Plotly.newPlot('plot', [currTraces[feature][lane]], layout);
+}
+
+async function plotAllFeaturesDay(day_num, lane) {
+
+    if(day_num != currDay || Object.keys(currTraces).length === 0) {
+        result = await readDay(day_num);
+        crashTimes = result[0];
+        manualTimes = result[1];
+    }
+
+    const crashLines = [];
+    let hasCrash = false;
+    for (const crashTime of crashTimes) {
+        line = {
+            type: 'line',
+            x0: crashTime,   // x position of the vertical line
+            y0: 53,   // start y position of the vertical line
+            x1: crashTime,   // end x position of the vertical line
+            y1: 70.5,  // end y position of the vertical line
+            line: {
+                color: 'white',
+                width: 2,
+                dash: 'dashdot',
+            },
+            name: 'Crash Reported', 
+            showlegend: !hasCrash ? true : false
+        }
+        
+        crashLines.push(line);
+        hasCrash = true;
+    }
+
+    let hasManual = false;
+    for (const manualTime of manualTimes) {
+        line = {
+            type: 'line',
+            x0: manualTime,   // x position of the vertical line
+            y0: 53,   // start y position of the vertical line
+            x1: manualTime,   // end x position of the vertical line
+            y1: 70.5,  // end y position of the vertical line
+            line: {
+                color: 'yellow',
+                width: 1,
+                dash: 'dashdot',
+            },
+            name: 'Human Annotated Anomaly',  
+            showlegend: !hasManual ? true : false,
+        }
+
+        crashLines.push(line);
+        hasManual = true;
+    }
+
+    let feature = 'speed';
+    // Define layout for the plot
+    const layout = {
+        title: feature.charAt(0).toUpperCase() + feature.slice(1) + " in Lane " + lane.charAt(lane.length - 1),
+        xaxis: {
+            title: 'Time',
+            showgrid: true,
+            gridcolor: 'rgba(255, 255, 255, 0.3)' // Adjusting grid color for better visibility
+        },
+        yaxis: {
+            title: 'Milemarker',
+            autorange: 'reversed',
+            showgrid: true,
+            gridcolor: 'rgba(255, 255, 255, 0.3)' // Adjusting grid color for better visibility
+        },
+        plot_bgcolor: 'rgba(0, 0, 0, 1)', // Setting background color to black
+        paper_bgcolor: 'rgba(0, 0, 0, 0)', // Setting paper background color to transparent
+        margin: {
+            l: 80, // Adjusting left margin to create space
+            r: 50, // Adjusting right margin
+            b: 50, // Adjusting bottom margin
+            t: 50, // Adjusting top margin to reduce distance between title and plot
+            pad: 4 // Padding between plot area and the edge of the plot
+        },
+        responsive: true,
+        shapes: crashLines,
+        legend: {
+            
+            traceorder: 'normal',
+            font: {
+                family: 'Arial, sans-serif',
+                size: 12,
+                color: 'black'
+            },
+            bgcolor: 'rgba(0,0,0,0.15)', // Transparent background
+            bordercolor: 'rgba(255,255,255,0.1)', // Border color for legend
+            borderwidth: 0.1, // Border width for legend
+            itemsizing: 'constant', // Keep legend items the same size
+            itemclick: false, // Allow toggling visibility by clicking on legend items
+            x: 0, // Position legend on the left
+            xanchor: 'left', // Anchor legend to the left
+            y: -0.15, // Position legend at the top
+            yanchor: 'top', // Anchor legend to the top
+            title: {
+                text: '',
+                font: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'white'
+                }
+            },
+            orientation: "h"
+        },
+        showlegend: true
+    };
+    
+
+    // Plot the scatter plot
+    Plotly.newPlot('plot', [currTraces[feature][lane]], layout);
+
+    feature = 'occ';
+
+    const layout2 = {
+        title: feature.charAt(0).toUpperCase() + feature.slice(1) + " in Lane " + lane.charAt(lane.length - 1),
+        xaxis: {
+            title: 'Time',
+            showgrid: true,
+            gridcolor: 'rgba(255, 255, 255, 0.3)' // Adjusting grid color for better visibility
+        },
+        yaxis: {
+            title: 'Milemarker',
+            autorange: 'reversed',
+            showgrid: true,
+            gridcolor: 'rgba(255, 255, 255, 0.3)' // Adjusting grid color for better visibility
+        },
+        plot_bgcolor: 'rgba(0, 0, 0, 1)', // Setting background color to black
+        paper_bgcolor: 'rgba(0, 0, 0, 0)', // Setting paper background color to transparent
+        margin: {
+            l: 80, // Adjusting left margin to create space
+            r: 50, // Adjusting right margin
+            b: 50, // Adjusting bottom margin
+            t: 50, // Adjusting top margin to reduce distance between title and plot
+            pad: 4 // Padding between plot area and the edge of the plot
+        },
+        responsive: true,
+        shapes: crashLines,
+        legend: {
+            
+            traceorder: 'normal',
+            font: {
+                family: 'Arial, sans-serif',
+                size: 12,
+                color: 'black'
+            },
+            bgcolor: 'rgba(0,0,0,0.15)', // Transparent background
+            bordercolor: 'rgba(255,255,255,0.1)', // Border color for legend
+            borderwidth: 0.1, // Border width for legend
+            itemsizing: 'constant', // Keep legend items the same size
+            itemclick: false, // Allow toggling visibility by clicking on legend items
+            x: 0, // Position legend on the left
+            xanchor: 'left', // Anchor legend to the left
+            y: -0.15, // Position legend at the top
+            yanchor: 'top', // Anchor legend to the top
+            title: {
+                text: '',
+                font: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'white'
+                }
+            },
+            orientation: "h"
+        },
+        showlegend: true
+    };
+    
+
+    // Plot the scatter plot
+    Plotly.newPlot('plot2', [currTraces[feature][lane]], layout2);
+
+    feature = 'volume';
+
+    const layout3 = {
+        title: feature.charAt(0).toUpperCase() + feature.slice(1) + " in Lane " + lane.charAt(lane.length - 1),
+        xaxis: {
+            title: 'Time',
+            showgrid: true,
+            gridcolor: 'rgba(255, 255, 255, 0.3)' // Adjusting grid color for better visibility
+        },
+        yaxis: {
+            title: 'Milemarker',
+            autorange: 'reversed',
+            showgrid: true,
+            gridcolor: 'rgba(255, 255, 255, 0.3)' // Adjusting grid color for better visibility
+        },
+        plot_bgcolor: 'rgba(0, 0, 0, 1)', // Setting background color to black
+        paper_bgcolor: 'rgba(0, 0, 0, 0)', // Setting paper background color to transparent
+        margin: {
+            l: 80, // Adjusting left margin to create space
+            r: 50, // Adjusting right margin
+            b: 50, // Adjusting bottom margin
+            t: 50, // Adjusting top margin to reduce distance between title and plot
+            pad: 4 // Padding between plot area and the edge of the plot
+        },
+        responsive: true,
+        shapes: crashLines,
+        legend: {
+            
+            traceorder: 'normal',
+            font: {
+                family: 'Arial, sans-serif',
+                size: 12,
+                color: 'black'
+            },
+            bgcolor: 'rgba(0,0,0,0.15)', // Transparent background
+            bordercolor: 'rgba(255,255,255,0.1)', // Border color for legend
+            borderwidth: 0.1, // Border width for legend
+            itemsizing: 'constant', // Keep legend items the same size
+            itemclick: false, // Allow toggling visibility by clicking on legend items
+            x: 0, // Position legend on the left
+            xanchor: 'left', // Anchor legend to the left
+            y: -0.15, // Position legend at the top
+            yanchor: 'top', // Anchor legend to the top
+            title: {
+                text: '',
+                font: {
+                    family: 'Arial, sans-serif',
+                    size: 14,
+                    color: 'white'
+                }
+            },
+            orientation: "h"
+        },
+        showlegend: true
+    };
+    
+
+    // Plot the scatter plot
+    Plotly.newPlot('plot3', [currTraces[feature][lane]], layout3);
 }
 
 function updateTraces(data) {
@@ -264,7 +491,13 @@ function updatePlot() {
     const selectedLane = laneDropdown.options[laneDropdown.selectedIndex].value;
     const selectedDay = dayDropdown.options[dayDropdown.selectedIndex].value;
 
-    plotDay(parseInt(selectedDay), selectedFeature, selectedLane);
+    if (selectedFeature == "all") {
+        plotAllFeaturesDay(parseInt(selectedDay), selectedLane);
+    } else {
+        plotDay(parseInt(selectedDay), selectedFeature, selectedLane);
+        Plotly.purge('plot2');
+        Plotly.purge('plot3');
+    }
 }
 
 plotDay(1, 'speed', 'lane1')
