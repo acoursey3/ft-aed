@@ -20,60 +20,62 @@
                 </a>
             </div>
         </div>
-        <div class="main-body">
-            <!-- <h1>Website coming soon</h1> -->
-            <div>
-                <h1>Freeway Traffic Anomalous Event Detection (FT-AED) Dataset</h1>
-                <p>Early and accurate detection of anomalous events on the freeway, such as accidents, can improve emergency response and clearance. 
-                    However, existing delays and mistakes from manual crash reporting records make it a difficult problem to solve. 
-                    Current large-scale freeway traffic datasets are not designed for anomaly detection and ignore these challenges. 
-                    Therefore, we introduce the <strong>Freeway Traffic Anomalous Event Detection Dataset</strong>, the first large-scale lane-level freeway traffic dataset for anomaly detection. 
-                    Our dataset consists of a month of weekday radar detection sensor data collected in 4 lanes along an 18-mile stretch of Interstate 24 heading toward Nashville, TN, comprising over 3.7 million sensor measurements. We also collect official crash reports from the Nashville Traffic Management Center and manually label all other potential anomalies in the dataset. 
-                    This dataset has the potential to be used for developing and benchmarking anomaly detection methods to enchance automatic incident detection methods and reduce reporting delays.
-            </div>
-            <div class="link-container">
-                <a class="button-link" href="https://github.com/acoursey3/freeway-anomaly-data/" target="_blank">📊 Download the Dataset</a>
-                <a class="button-link" href="https://arxiv.org" target="_blank">📄 Read the Whitepaper</a>
-                <a class="button-link" href="https://github.com/acoursey3/freeway-anomaly-detection/" target="_blank">🖥️ Run Anomaly Detection Code</a>
-            </div>
-            <div class="plot-container" style="border: 1px dashed;">
-                <h1 class="plot-title">Interactive Data Visualization</h1>
-                <div class="dropdown-container">
-                    <select id="feature-dropdown" onchange="updatePlot()" class="dropdown">
-                        <option value="speed" selected>Speed</option>
-                        <option value="occ">Occupancy</option>
-                        <option value="volume">Volume</option>
-                    </select>
-                    <select id="lane-dropdown" onchange="updatePlot()" class="dropdown">
-                        <option value="lane1" selected>Lane 1</option>
-                        <option value="lane2">Lane 2</option>
-                        <option value="lane3">Lane 3</option>
-                        <option value="lane4">Lane 4</option>
-                    </select>
-                    <select id="day-dropdown" onchange="updatePlot()" class="dropdown">
-                        <option value="1" selected>Oct. 2</option>
-                        <option value="2">Oct. 3</option>
-                        <option value="3">Oct. 4</option>
-                        <option value="4">Oct. 5</option>
-                        <option value="5">Oct. 6</option>
-                        <option value="8">Oct. 9</option>
-                        <option value="9">Oct. 10</option>
-                        <option value="10">Oct. 11</option>
-                        <option value="11">Oct. 12</option>
-                        <option value="12">Oct. 13</option>
-                        <option value="15">Oct. 16</option>
-                        <option value="16">Oct. 17</option>
-                        <option value="17">Oct. 18</option>
-                        <option value="18">Oct. 19</option>
-                        <option value="19">Oct. 20</option>
-                        <option value="22">Oct. 23</option>
-                        <option value="23">Oct. 24</option>
-                        <option value="24">Oct. 25</option>
-                        <option value="25">Oct. 26</option>
-                        <option value="26">Oct. 27</option>
-                    </select>
+        <div class="main-container">
+            <div class="main-body">
+                <!-- <h1>Website coming soon</h1> -->
+                <div>
+                    <h1>Freeway Traffic Anomalous Event Detection (FT-AED) Dataset</h1>
+                    <p>Early and accurate detection of anomalous events on the freeway, such as accidents, can improve emergency response and clearance. 
+                        However, existing delays and mistakes from manual crash reporting records make it a difficult problem to solve. 
+                        Current large-scale freeway traffic datasets are not designed for anomaly detection and ignore these challenges. 
+                        Therefore, we introduce the <strong>Freeway Traffic Anomalous Event Detection Dataset</strong>, the first large-scale lane-level freeway traffic dataset for anomaly detection. 
+                        Our dataset consists of a month of weekday radar detection sensor data collected in 4 lanes along an 18-mile stretch of Interstate 24 heading toward Nashville, TN, comprising over 3.7 million sensor measurements. We also collect official crash reports from the Nashville Traffic Management Center and manually label all other potential anomalies in the dataset. 
+                        This dataset has the potential to be used for developing and benchmarking anomaly detection methods to enchance automatic incident detection methods and reduce reporting delays.
                 </div>
-                <div id="plot" class="plot"></div>
+                <div class="link-container">
+                    <a class="button-link" href="https://github.com/acoursey3/freeway-anomaly-data/" target="_blank">📊 Download the Dataset</a>
+                    <a class="button-link" href="https://arxiv.org" target="_blank">📄 Read the Whitepaper</a>
+                    <a class="button-link" href="https://github.com/acoursey3/freeway-anomaly-detection/" target="_blank">🖥️ Run Anomaly Detection Code</a>
+                </div>
+                <div class="plot-container" style="border: 1px dashed;">
+                    <h1 class="plot-title">Interactive Data Visualization</h1>
+                    <div class="dropdown-container">
+                        <select id="feature-dropdown" onchange="updatePlot()" class="dropdown">
+                            <option value="speed" selected>Speed</option>
+                            <option value="occ">Occupancy</option>
+                            <option value="volume">Volume</option>
+                        </select>
+                        <select id="lane-dropdown" onchange="updatePlot()" class="dropdown">
+                            <option value="lane1" selected>Lane 1</option>
+                            <option value="lane2">Lane 2</option>
+                            <option value="lane3">Lane 3</option>
+                            <option value="lane4">Lane 4</option>
+                        </select>
+                        <select id="day-dropdown" onchange="updatePlot()" class="dropdown">
+                            <option value="1" selected>Oct. 2</option>
+                            <option value="2">Oct. 3</option>
+                            <option value="3">Oct. 4</option>
+                            <option value="4">Oct. 5</option>
+                            <option value="5">Oct. 6</option>
+                            <option value="8">Oct. 9</option>
+                            <option value="9">Oct. 10</option>
+                            <option value="10">Oct. 11</option>
+                            <option value="11">Oct. 12</option>
+                            <option value="12">Oct. 13</option>
+                            <option value="15">Oct. 16</option>
+                            <option value="16">Oct. 17</option>
+                            <option value="17">Oct. 18</option>
+                            <option value="18">Oct. 19</option>
+                            <option value="19">Oct. 20</option>
+                            <option value="22">Oct. 23</option>
+                            <option value="23">Oct. 24</option>
+                            <option value="24">Oct. 25</option>
+                            <option value="25">Oct. 26</option>
+                            <option value="26">Oct. 27</option>
+                        </select>
+                    </div>
+                    <div id="plot" class="plot"></div>
+                </div>
             </div>
         </div>
         <div class="footer">
