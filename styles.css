@@ -120,7 +120,7 @@ body {
 
 .button-link:hover {
     transform: scale(1.1); /* Scale the button by 10% on hover */
-    animation: rainbow-border 5s infinite; /* Rainbow border animation */
+    animation: green-border 3s infinite; /* Rainbow border animation */
     cursor: pointer;
 }
 
@@ -145,6 +145,18 @@ body {
     }
     100% {
         border-color: violet; /* Transition back to red */
+    }
+}
+
+@keyframes green-border {
+    0% {
+        border-color: black; /* Start with red */
+    }
+    50% {
+        border-color: rgb(29, 216, 29); /* Transition to green */
+    }
+    100% {
+        border-color: black; /* Transition back to red */
     }
 }
 
